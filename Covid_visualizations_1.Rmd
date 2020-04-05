@@ -11,6 +11,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```{r load-packages}
 install.packages("tidyverse")
+library(ggplot2)
 ```
 
 ## R Markdown
@@ -24,22 +25,19 @@ When you click the **Knit** button a document will be generated that includes bo
 You can also embed plots, for example:
 
 ```{r pressure, echo=FALSE}
-library(ggplot2)
- 
 symptoms <- data.frame("brand" = c("Shows Symptoms","Silent Carriers"),
-            "share" = c(.75,.25))
-                        
+            "share" = c(.36,.64))
 # Create a basic bar
 pie = ggplot(symptoms, aes(x="", y=share, fill=brand)) + geom_bar(stat="identity", width=1)
  
 # Convert to pie (polar coordinates) and add labels
-pie = pie + coord_polar("y", start=0) + geom_text(aes(label = paste0(round(value*100), "%")), position = position_stack(vjust = 0.5))
+pie = pie + coord_polar("y", start=0)
  
 # Add color scale (hex colors)
 pie = pie + scale_fill_manual(values=c("Gray", "Red"))
  
 # Remove labels and add title
-pie = pie + labs(x = NULL, y = NULL, fill = NULL, title = "Covid-19", subtitle = "25% of Infected People Are Silence Carriers")
+pie = pie + labs(x = NULL, y = NULL, fill = NULL, title = "64% of Infected People Are Asymptomatic", caption = "Coronavirus testing in China finds more symptom free cases")
  
 # Tidy up the theme
 pie = pie + theme_classic() + theme(axis.line = element_blank(),
@@ -47,5 +45,6 @@ pie = pie + theme_classic() + theme(axis.line = element_blank(),
           axis.ticks = element_blank(),
           plot.title = element_text(hjust = 0.5, color = "#666666"))
 ```
+Source: https://www.bloomberg.com/news/articles/2020-04-02/fresh-coronavirus-testing-in-china-finds-more-symptomless-cases
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
