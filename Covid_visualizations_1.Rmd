@@ -9,8 +9,12 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-```{r load-packages}
+
+```{r install_packages}
 install.packages("tidyverse")
+```
+
+```{r load-packages}
 library(dplyr)
 library(ggplot2)
 library(readxl)
@@ -18,7 +22,6 @@ library(readxl)
 
 ```{r read-files}
 NC_Hospital_Capacity <- read_excel("NC_Hospital_Capacity.xlsx")
-View(NC_Hospital_Capacity)
 ```
 
 ## R Markdown
@@ -27,9 +30,11 @@ This is an R Markdown document. Markdown is a simple formatting syntax for autho
 
 When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
 
+
+
 ## Graphs
 
-```{r pressure, echo=FALSE}
+```{r silent-carriers, echo=FALSE}
 symptoms <- data.frame("brand" = c("Shows Symptoms","Silent Carriers"),
             "share" = c(.36,.64))
 # Create a basic bar
@@ -49,6 +54,7 @@ pie = pie + theme_classic() + theme(axis.line = element_blank(),
           axis.text = element_blank(),
           axis.ticks = element_blank(),
           plot.title = element_text(hjust = 0.5, color = "#666666"))
+pie
 ```
 Source: https://www.bloomberg.com/news/articles/2020-04-02/fresh-coronavirus-testing-in-china-finds-more-symptomless-cases
 
@@ -64,9 +70,9 @@ beds <- data.frame(Hospital_Beds =c("Projected
                 Hospitalized Individuals"),
                 Predicted_Count=c(13676, 1552576, 323773))
 head(beds)
-
 ```
-```{r}
+
+```{r nc-hospital-capacity-graph}
 hospital_bed_space <- ggplot(data=beds, aes(x=Hospital_Beds, y=Predicted_Count)) +
   geom_bar(stat="identity", color="#002D72", fill="red") +
         labs(title = "Projected Hospital Capacity in NC", x = NA, y = "Predicted count") +
@@ -74,4 +80,5 @@ hospital_bed_space <- ggplot(data=beds, aes(x=Hospital_Beds, y=Predicted_Count))
         
 hospital_bed_space
 ```
+
 Source: https://globalepidemics.org/our-data/hospital-capacity/
